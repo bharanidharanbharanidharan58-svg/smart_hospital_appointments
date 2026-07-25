@@ -4,9 +4,9 @@ let selectedSlot = null;
 function navigateTo(viewId) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-    
+
     const target = document.getElementById(viewId);
-    if(target) target.classList.add('active');
+    if (target) target.classList.add('active');
 }
 
 function toggleTheme() {
@@ -18,10 +18,10 @@ function toggleTheme() {
 async function loadHospitals() {
     const res = await fetch('/api/hospitals');
     const hospitals = await res.json();
-    
+
     const grid = document.getElementById('home-hospitals-grid');
-    if(!grid) return;
-    
+    if (!grid) return;
+
     grid.innerHTML = hospitals.map(h => `
         <div class="card">
             <h3>${h.name}</h3>
@@ -43,12 +43,12 @@ async function handleLogin(e) {
 
     const res = await fetch('/api/auth/login', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role, email, password })
     });
-    
+
     const data = await res.json();
-    if(data.success) {
+    if (data.success) {
         currentUser = data.user;
         closeModal('login-modal');
         alert("Login successful!");
@@ -65,7 +65,7 @@ function toggleChatbot() {
 async function sendChatMessage() {
     const input = document.getElementById('chat-input');
     const query = input.value;
-    if(!query) return;
+    if (!query) return;
 
     const body = document.getElementById('chat-messages');
     body.innerHTML += `<div style="margin-bottom:0.5rem; text-align:right"><b>You:</b> ${query}</div>`;
@@ -73,10 +73,10 @@ async function sendChatMessage() {
 
     const res = await fetch('/api/chatbot', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query })
     });
-    
+
     const data = await res.json();
     body.innerHTML += `<div style="margin-bottom:0.5rem; color:var(--primary)"><b>AI:</b> ${data.message}</div>`;
     body.scrollTop = body.scrollHeight;
