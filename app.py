@@ -20,11 +20,11 @@ from notification_manager import send_appointment_notifications, update_notifica
 app = Flask(__name__)
 app.secret_key = 'smart_hospital_super_secret_key_for_session_management'
 
-UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
+import tempfile
+
+UPLOAD_FOLDER = tempfile.gettempdir()
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
 listeners = []
 
 def send_realtime_event(event_type, data):
